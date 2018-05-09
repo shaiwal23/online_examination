@@ -59,23 +59,9 @@ public class MainController extends HttpServlet {
 			}
             }
             else if(request.getRequestURI().equals(applicationContextPath+"/logout")){
-                Cookie[] cookies=null;
-                cookies=request.getCookies();
-                for(int i=0;i<cookies.length;i++){
-                    System.out.println(cookies[i].getValue());
-                    if(cookies[i].getName().equals("email")){
-                        cookies[i].setMaxAge(0);
-                        cookies[i].setValue("");
-                        
-                    }
-                        
-                    if(cookies[i].getName().equals("pass")){
-                        cookies[i].setMaxAge(0);
-                        cookies[i].setValue("");
-                    }
-                }
+                
                 request.getSession().invalidate();
-                response.sendRedirect("firstpage.jsp");
+                response.sendRedirect("entry.jsp");
             }
         }
     }
