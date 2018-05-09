@@ -61,12 +61,21 @@ public class MainController extends HttpServlet {
             else if(request.getRequestURI().equals(applicationContextPath+"/logout")){
                 Cookie[] cookies=null;
                 cookies=request.getCookies();
-                if(cookies!=null){
-                    cookies[0].setMaxAge(-1);
-                    cookies[1].setMaxAge(-1);
+                for(int i=0;i<cookies.length;i++){
+                    System.out.println(cookies[i].getValue());
+                    if(cookies[i].getName().equals("email")){
+                        cookies[i].setMaxAge(0);
+                        cookies[i].setValue("");
+                        
+                    }
+                        
+                    if(cookies[i].getName().equals("pass")){
+                        cookies[i].setMaxAge(0);
+                        cookies[i].setValue("");
+                    }
                 }
                 request.getSession().invalidate();
-                request.getRequestDispatcher("index.html").forward(request, response);
+                response.sendRedirect("firstpage.jsp");
             }
         }
     }
