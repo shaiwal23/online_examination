@@ -10,9 +10,11 @@ import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -45,6 +47,7 @@ public class MainController extends HttpServlet {
 			request.getSession().setAttribute("exam", exam);
                 //	System.out.println(request.getSession().getAttribute("user"));
 			if (request.getSession().getAttribute("user") == null) {
+                                
 				request.getRequestDispatcher("login.jsp").forward(request,
 						response);
 
@@ -56,6 +59,12 @@ public class MainController extends HttpServlet {
 			}
             }
             else if(request.getRequestURI().equals(applicationContextPath+"/logout")){
+                Cookie[] cookies=null;
+                cookies=request.getCookies();
+                if(cookies!=null){
+                    cookies[0].setMaxAge(-1);
+                    cookies[1].setMaxAge(-1);
+                }
                 request.getSession().invalidate();
                 request.getRequestDispatcher("index.html").forward(request, response);
             }

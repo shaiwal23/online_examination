@@ -6,7 +6,10 @@ and open the template in the editor.
 -->
 <html>
     <head>
+       
         <title>Online Exam</title>
+       
+        
         <link href="Bootstrap/newcss.css" rel="stylesheet" type="text/css"/>
         <script>
 function singup() {
@@ -15,13 +18,15 @@ function singup() {
 function singin() {
     window.open("login.jsp","_self");
 }
- 
+function a(){
+    window.open("firstpage.jsp");
+}
 
         
 </script>
 
     </head>
-    <body style="background-color: background">
+    <body style="background-color: background" onload="a()">
         <div>
             <p class="text">Online Examination</p>
         </div>

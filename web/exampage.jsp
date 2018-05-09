@@ -53,14 +53,14 @@
             }
             function examTimer(){
                 if(parseInt(sec)>0){
-                    document.getElementById("showtime").innerHTML = "Time Remaining :"+min+" Minute ," + sec+" Seconds";
+                    document.getElementById("showtime").innerHTML = "Time Remaining :"+min+" Minute ," + sec+" Sec";
                     sec = parseInt(sec) - 1;                
                     time = setTimeout("examTimer()", 1000);
                 }
                 else {
 			
 			    if (parseInt(min)==0 && parseInt(sec)==0){
-			    	document.getElementById("showtime").innerHTML = "Time Remaining :"+min+" Minute ," + sec+" Seconds";
+			    	document.getElementById("showtime").innerHTML = "Time Remaining :"+min+" Minute ," + sec+" Sec";
 				     alert("Time Up");
 				     document.questionForm.minute.value=0;
 				     document.questionForm.second.value=0;
@@ -69,7 +69,7 @@
 			     }
 				 
                             if (parseInt(sec) == 0) {				
-				    document.getElementById("showtime").innerHTML = "Time Remaining :"+min+" Minute ," + sec+" Seconds";					
+				    document.getElementById("showtime").innerHTML = "Time Remaining :"+min+" Minute ," + sec+" Sec";					
                                     min = parseInt(min) - 1;
 					sec=59;
                                     time = setTimeout("examTimer()", 1000);
@@ -124,17 +124,16 @@
         </form>
     </div>
     <div class="col-sm-8 text-center"> 
-    <div style="position:absolute;top:20px">
-        <nav class="navbar navbar-inverse">
-            <ul class="nav navbar-nav">
-                <li>Current Question ${sessionScope.que.question_no} / ${sessionScope.total_question}</li>
-            </ul>
+        <div>
+        <nav class="navbar navbar-default">
+            <p class="navbar-text navbar-left">Current Question ${sessionScope.que.question_no} / ${sessionScope.total_question}</p>
+            <p id="showtime" class="navbar-text navbar-right">
         </nav>
-    </div>
+        </div>
 
-    <div id="showtime" style="position:absolute;left:500px;top:20px"></div>
     
-    <div style="position:absolute;padding:25px;top:60px;text-align: left">
+    <div style="text-align: left" class="jumbotron">
+       
         <span>${sessionScope.que.stmt}</span><br/><br/>
 
     <form action="ExamController" method="post" name="questionForm" >
@@ -146,26 +145,33 @@
     
     <input type="radio" name="answer" <%if((q.getUserSelected()>0)&&(q.getUserSelected()==op.getAnswer_id())){%> checked <%}%> value="<%=op.getAnswer_id()%>"><%=op.getStmt()%> <br/>
     <%}%>
- 
+   
+    </div>
+    <div class="btn-group btn-group-justified" role="group" aria-label="...">
  
     <%int q_no=q.getQuestion_no();
         if(q_no>1){%>
-    <input type="submit" name="action" value="Previous" onclick="customSubmit()" />
-    <%}%>
- 
-    <%if(q_no<t_q){%>
-    <input type="submit" name="action" value="Next" onclick="customSubmit()" />
-    <%}%>
+    <div class="btn-group" role="group">
+        <input type="submit" class="btn btn-default" name="action" value="Previous" onclick="customSubmit()" />
+        <%}%>
+    </div>
+    <div class="btn-group" role="group">
+        <input  type="submit" class="btn btn-default" name="action" value="Submit" onclick="customSubmit()">
+    </div>
+    <div class="btn-group" role="group">
+        <%if(q_no<t_q){%>
+        <input type="submit" class="btn btn-default" name="action" value="Next" onclick="customSubmit()" />
+        <%}%>
+    </div>
+    </div>
+    <input type="submit" class="btn btn-primary btn-lg" name="action" value="Finish Exam" onclick="customSubmit()" />
     
-    <input style="color: #1ebfae" type="submit" name="action" value="Submit" onclick="customSubmit()">
-    <input type="submit" name="action" value="Finish Exam" onclick="customSubmit()" />
- 
     <input type="hidden" name="minute"/> 
     <input type="hidden" name="second"/>
 
     </form>
 
-    </div>
+    
         
     
   </div>

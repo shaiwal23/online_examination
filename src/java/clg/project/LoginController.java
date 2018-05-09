@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,6 +50,15 @@ public class LoginController extends HttpServlet {
                
             }
             else{
+                if(request.getParameter("remember")!=null){
+                    System.out.println("cookie");
+                    Cookie c1=new Cookie("email", email);
+                    Cookie c2=new Cookie("pass",password);
+                    c1.setMaxAge(6000);
+                    c2.setMaxAge(6000);
+                    response.addCookie(c1);
+                    response.addCookie(c2);
+                }
                 HttpSession session=request.getSession();
                 session.setAttribute("user",u);
                 request.getRequestDispatcher("userPage.jsp").forward(request, response);
