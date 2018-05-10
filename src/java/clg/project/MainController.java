@@ -61,7 +61,7 @@ public class MainController extends HttpServlet {
             else if(request.getRequestURI().equals(applicationContextPath+"/logout")){
                 
                 request.getSession().invalidate();
-                response.sendRedirect("entry.jsp");
+                response.sendRedirect("index.html");
             }
         }
     }

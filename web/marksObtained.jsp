@@ -25,19 +25,21 @@
     <body>
         
         <div class="table-responsive">          
-        <table class="table">
+        <table class="table table-fixed table-striped">
             <thead>
-            <tr><th>Exam ID</th><th>Exam time</th><th>Exam Duration</th><th>Total Marks</th><th>Marks Obtained</th></tr>
+                <tr><th>Exam time</th><th>Exam Duration</th><th>Total Marks</th><th>Marks Obtained</th><th>Correct</th><th>Wrong</th><th>Unattempted</th></tr>
             </thead>
             
         <%for(Marks m:list){%>
         <tbody>
     <tr>
-        <td><%=m.getExam_id()%></td>
         <td><%=m.getExam_time()%></td>
         <td><%=m.getExam_duration()%></td>
         <td><%=m.getTotal_marks()%></td>
         <td><%=m.getMarks_obtained()%></td>
+        <td><%=m.getCorrect()%></td>
+        <td><%=m.getWrong()%></td>
+        <td><%=m.getUnanswered()%></td>
     </tr>
     </tbody>
     <%}%>

@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  */
 public class DataAccess {
     Connection con;
-    PreparedStatement ps_c_list,ps_ques,ps_t_id,ps_c_entry,ps_topics,ps_course,ps_register,ps_check_u,ps_options,ps_m_entry,ps_marks;
+    PreparedStatement ps_marks_update,ps_c_list,ps_ques,ps_t_id,ps_c_entry,ps_topics,ps_course,ps_register,ps_check_u,ps_options,ps_m_entry,ps_marks;
     
     String t_list="select t_id,t_name from course where c_id=?";
     String c_list="select c_id,c_name,t_id,t_name from course";
@@ -24,7 +24,8 @@ public class DataAccess {
     String check_u="select user_id,f_name,l_name,type from user where email=? and passwd=?";
     String options="select answer_id,stmt from answer where q_id=?";
     String m_entry="insert into exams (user_id,exam_duration,total_marks,marks_obtained,exam_time,t_id) values (?,?,?,?,?,?)";
-    String m_obtained="select exam_id,exam_time,exam_duration,total_marks,marks_obtained from exams where user_id=?";
+    String m_update="update exams set correct=?,wrong=?,unanswered=? where exam_time=?";
+    String m_obtained="select exam_id,exam_time,exam_duration,total_marks,marks_obtained,correct,wrong,unanswered from exams where user_id=?";
     
     
     public DataAccess(){
@@ -43,6 +44,7 @@ public class DataAccess {
             ps_options=con.prepareStatement(options);
             ps_m_entry=con.prepareStatement(m_entry);
             ps_marks=con.prepareStatement(m_obtained);
+            ps_marks_update=con.prepareStatement(m_update);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -56,7 +58,7 @@ public class DataAccess {
             ps_marks.setInt(1, user_id);
             ResultSet rs=ps_marks.executeQuery();
             while(rs.next()){
-                Marks m=new Marks(rs.getInt(1),rs.getInt(3), rs.getInt(4),rs.getInt(5),rs.getString(2));
+                Marks m=new Marks(rs.getInt(1),rs.getInt(3), rs.getInt(4),rs.getInt(5),rs.getString(2),rs.getInt(6),rs.getInt(7),rs.getInt(8));
                 if(list==null)
                     list=new ArrayList<>();
                 list.add(m);
@@ -75,7 +77,7 @@ public class DataAccess {
             ps_m_entry.setInt(3, total_marks);
             ps_m_entry.setInt(4, marks_obtained);
             ps_m_entry.setString(6, t_id);
-             res=ps_m_entry.executeUpdate();
+            int a=ps_m_entry.executeUpdate();
             
         } catch (SQLException ex) {
             Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
@@ -207,5 +209,18 @@ public class DataAccess {
         }
       return op;
    }
-    
+   public int updateMarks(Timestamp t,int correct,int wrong,int unattempted){
+       int a=-1; 
+       try {
+            ps_marks_update.setInt(1,correct);
+            ps_marks_update.setInt(2, wrong);
+            ps_marks_update.setInt(3, unattempted);
+            ps_marks_update.setTimestamp(4, t);
+            a=ps_marks_update.executeUpdate();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       return a;
+}
 }

@@ -143,7 +143,7 @@
             ArrayList<Options> list=q.getOptions();
             for(Options op:list){%>
     
-    <input type="radio" name="answer" <%if((q.getUserSelected()>0)&&(q.getUserSelected()==op.getAnswer_id())){%> checked <%}%> value="<%=op.getAnswer_id()%>"><%=op.getStmt()%> <br/>
+    <input type="radio" name="answer" <%if((q.getUserSelected()>0)&&(q.getUserSelected()==op.getAnswer_id())){%> checked <%}%> value="<%=op.getAnswer_id()%>"> <%=op.getStmt()%> <br/>
     <%}%>
    
     </div>
@@ -153,8 +153,9 @@
         if(q_no>1){%>
     <div class="btn-group" role="group">
         <input type="submit" class="btn btn-default" name="action" value="Previous" onclick="customSubmit()" />
-        <%}%>
+        
     </div>
+    <%}%>
     <div class="btn-group" role="group">
         <input  type="submit" class="btn btn-default" name="action" value="Submit" onclick="customSubmit()">
     </div>

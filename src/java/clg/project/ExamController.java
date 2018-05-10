@@ -127,7 +127,7 @@ public class ExamController extends HttpServlet {
                                 User u=(User)session.getAttribute("user");
                                 Timestamp d=(Timestamp)session.getAttribute("started");
                                 int u_id=u.getUser_id();
-                                int a=da.marks_entry(u_id,(String)session.getAttribute("exam"),(int)request.getSession().getAttribute("examDuration"),(Integer)request.getSession().getAttribute("total_question"), result,d);
+                                int exam_id=da.marks_entry(u_id,(String)session.getAttribute("exam"),(int)request.getSession().getAttribute("examDuration"),(Integer)request.getSession().getAttribute("total_question"), result,d);
 				request.setAttribute("result",result);
 				request.getRequestDispatcher("ReviewController").forward(request,response);
 				

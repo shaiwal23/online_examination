@@ -11,15 +11,30 @@ package clg.project;
  * @author HP
  */
 public class Marks {
-    private int exam_id,user_id,exam_duration,total_marks,marks_obtained;
+    private int exam_id,user_id,exam_duration,total_marks,marks_obtained,correct,wrong,unanswered;
     private String exam_time;
 
-    public Marks(int exam_id, int exam_duration, int total_marks, int marks_obtained, String exam_time) {
+    public Marks(int exam_id, int exam_duration, int total_marks, int marks_obtained, String exam_time,int correct,int wrong,int unanswered) {
         this.exam_id = exam_id;
         this.exam_duration = exam_duration;
         this.total_marks = total_marks;
         this.marks_obtained = marks_obtained;
         this.exam_time = exam_time;
+        this.correct=correct;
+        this.wrong=wrong;
+        this.unanswered=unanswered;
+    }
+
+    public int getCorrect() {
+        return correct;
+    }
+
+    public int getWrong() {
+        return wrong;
+    }
+
+    public int getUnanswered() {
+        return unanswered;
     }
 
     public int getExam_id() {
